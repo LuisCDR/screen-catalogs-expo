@@ -1,26 +1,26 @@
 import { ScrollView, Dimensions, StyleSheet } from 'react-native';
-import { Card, ThemeProvider } from '@rneui/themed';
-import { LoginForm, SocialBox } from '../components';
+import { Provider, Card } from 'react-native-paper';
+import { LoginFormP, SocialBoxP } from '../components';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default function LoginScreen() {
+export default function LoginScreenP() {
   return (
-    <ThemeProvider>
+    <Provider>
       <ScrollView 
       keyboardShouldPersistTaps='handled'
       contentContainerStyle={styles.container}>
-        <Card containerStyle={styles.imageContainer}>
-          <Card.Image 
+        <Card contentStyle={styles.imageContainer}>
+          <Card.Cover 
           resizeMode='contain' 
-          style={{ width:350, height:100 }} 
-          source={{ uri:'https://www.iuvade.com/wp-content/themes/iuvade/img/logo-iuvade.png' }}/>
+          style={{ width:350, height: 100 }} 
+          source={{ uri: 'https://www.iuvade.com/wp-content/themes/iuvade/img/logo-iuvade.png'}}/>
         </Card>
-        <LoginForm />
-        <SocialBox />
+        <LoginFormP />
+        <SocialBoxP />
       </ScrollView>
-    </ThemeProvider>
+    </Provider>
   );
 }
 
@@ -28,14 +28,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: SCREEN_HEIGHT,
-    width: '100%',
+    width: SCREEN_WIDTH,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10
   },
   imageContainer: {
     height: 150,
-    width: '100%',
+    width: SCREEN_WIDTH,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,

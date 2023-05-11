@@ -5,9 +5,9 @@ import Navigator from './src/navigation/Navigator';
 export default function App() {
   return (
     <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
+      {/* <ThemeProvider theme={theme}> */}
         <Navigator/>
-      </ThemeProvider>
+      {/* </ThemeProvider> */}
     </SafeAreaProvider>
   );
 }

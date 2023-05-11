@@ -1,8 +1,9 @@
 import { GestureResponderEvent, View } from 'react-native';
-import { Input, CheckBox, Button } from '@rneui/themed';
+import { TextInput, Checkbox, Button, HelperText } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
+import { create } from 'zustand';
 
 type CastOnPressType = (value: 
   | GestureResponderEvent 
@@ -18,8 +19,11 @@ interface FormValues {
 }
 
 export default function LoginForm() {
+  const useA = create(() => ({
+    
+  }));
   const [hidePassword, setHidePassword] = useState(true);
-  const iconPassword = hidePassword ? 'visibility' : 'visibility-off';
+  const iconPassword = hidePassword ? 'eye' : 'eye-off';
 
   const initialValues: FormValues = {
     ruc: '',
@@ -53,47 +57,58 @@ export default function LoginForm() {
             values, setFieldValue, errors, isValid 
           }) => (
           <>
-            <Input
+            <TextInput
             inputMode='numeric'
             keyboardType='numeric'
             label={'RUC'}
-            leftIcon={{ name:'star-outline' }}
+            left={<TextInput.Icon icon='star-outline' />}
             value={values.ruc}
             onChangeText={handleChange('ruc')}
             onBlur={handleBlur('ruc')}
             maxLength={11}
-            errorMessage={errors.ruc} />
-            <Input
+            error={Boolean(errors.ruc)}/>
+            <HelperText type='error' visible={Boolean(errors.ruc)}>
+              {errors.ruc}
+            </HelperText>
+            <TextInput
             label={'Usuario'}
-            leftIcon={{ name: 'account-box-outline', type: 'material-community' }}
+            left={<TextInput.Icon icon='account-box-outline' />}
             onChangeText={handleChange('user')}
             onBlur={handleBlur('user')}
-            errorMessage={errors.user}/>
-            <Input 
+            error={Boolean(errors.user)}/>
+            <HelperText type='error' visible={Boolean(errors.user)}>
+              {errors.user}
+            </HelperText>
+            <TextInput 
             label={'Contraseña'}
-            leftIcon={{ name:'lock-outline' }}
-            rightIcon={
+            left={<TextInput.Icon icon='lock-outline' />}
+            right={
               !!values.password 
-              ? { 
-                  name: iconPassword, 
-                  onPress: () => setHidePassword(h => !h),
-                  containerStyle: {borderRadius:15}
-                }
+              ? <TextInput.Icon icon={iconPassword} 
+                  onPress={() => setHidePassword(h => !h)}
+                  style={{borderRadius:15}}
+                />
               : undefined
             }
             secureTextEntry={hidePassword}
             onChangeText={handleChange('password')}
             onBlur={handleBlur('password')}
-            errorMessage={errors.password}/>
-            <CheckBox 
-            checked={values.remember} 
-            title='Recordar usuario'
+            error={Boolean(errors.password)}/>
+            <HelperText type='error' visible={Boolean(errors.password)}>
+              {errors.password}
+            </HelperText>
+            <Checkbox.Item
+            position='leading'
+            style={{width: 200}}
+            status={values.remember ? 'checked' : 'unchecked'}
+            label='Recordar usuario'
             onPress={() => setFieldValue('remember', !values.remember)}/>
-            <Button 
-            buttonStyle={{ borderRadius:15 }}
-            title='Inicia sesión' 
+            <Button
+            mode='contained'
             disabled={!isValid}
-            onPress={handleSubmit as CastOnPressType} />
+            onPress={handleSubmit as CastOnPressType}>
+              Inicia sesión
+            </Button>
           </>
         )}
       </Formik>
